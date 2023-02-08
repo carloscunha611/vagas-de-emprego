@@ -8,33 +8,38 @@ function listarVagas() {
     return textoFinal
   }, '')
 
-  alert(vagasEmTexto)
+  alert(`
+  Lista de vagas:
+   ${vagasEmTexto}
+  `)
 }
 
 function novaVaga() {
-  const nome = prompt('Informe um nome para a vaga:')
-  const descricao = prompt('Informe um descrição para a vaga:')
-  const dataLimite = prompt('Informe um data limite (dd/mm/aaaa) para a vaga:')
+  const nome = prompt(`Informe um nome para a vaga:`)
+  const descricao = prompt(`Informe um descrição para a vaga:`)
+  const dataLimite = prompt(`Informe um data limite (dd/mm/aaaa) para a vaga:`)
 
-  const confirmacao = confirm(
-    'Deseja criar uma nova vaga com essas informações?\n' +
-      'Nome: ' +
-      nome +
-      '\nDescrição: ' +
-      descricao +
-      '\nData limite: ' +
-      dataLimite
-  )
+  const confirmacao = confirm(`
+    Deseja criar uma nova vaga com essas informações?
+    Nome: ${nome}
+    Descrição: ${descricao}
+    Data limite: ${dataLimite}`)
 
   if (confirmacao) {
     const novaVaga = { nome, descricao, dataLimite, candidatos: [] }
     vagas.push(novaVaga)
-    alert('Vaga criada.')
+    alert(`Vaga criada.`)
   }
 }
 
 function exibirVaga() {
-  const indice = prompt('Informe o índice da vaga que deseja exibir:')
+  const indice = prompt(`Informe o índice da vaga que deseja exibir:`)
+
+  if (indice >= vagas.length || indice < 0) {
+    alert(` índice inválido`)
+    return
+  }
+
   const vaga = vagas[indice]
 
   const candidatosEmTexto = vaga.candidatos.reduce(
@@ -42,46 +47,33 @@ function exibirVaga() {
     ''
   )
 
-  alert(
-    'Vaga nº ' +
-      indice +
-      '\nNome: ' +
-      vaga.nome +
-      '\nDescrição: ' +
-      vaga.descricao +
-      '\nData limite: ' +
-      vaga.dataLimite +
-      '\nQuantidade de candidatos: ' +
-      vaga.candidatos.length +
-      '\nCandidatos inscritos:' +
-      candidatosEmTexto
-  )
+  alert(`
+    Vaga nº ${indice}
+    Nome: ${vaga.nome}
+    Descrição: ${vaga.descricao}
+    Data limite: ${vaga.dataLimite}
+    Quantidade de candidatos: ${vaga.candidatos.length}
+    Candidatos inscritos:${candidatosEmTexto}
+  `)
 }
 
 function inscreverCandidato() {
-  const candidato = prompt('Informe o nome do(a) candidato(a):')
+  const candidato = prompt(`Informe o nome do(a) candidato(a):`)
   const indice = prompt(
-    'Informe o índice da vaga para a qual o(a) candidato(a) deseja se inscrever:'
+    `Informe o índice da vaga para a qual o(a) candidato(a) deseja se inscrever:`
   )
   const vaga = vagas[indice]
 
-  const confirmacao = confirm(
-    'Deseja inscrever o candidato ' +
-      candidato +
-      ' na vaga ' +
-      indice +
-      '?\n' +
-      'Nome: ' +
-      vaga.nome +
-      '\nDescrição: ' +
-      vaga.descricao +
-      '\nData limite: ' +
-      vaga.dataLimite
-  )
+  const confirmacao = confirm(`
+    Deseja inscrever o candidato ${candidato} na vaga ${indice}?
+    Nome: ${vaga.nome}
+    Descrição: ${vaga.descricao}
+    Data limite: ${vaga.dataLimite}
+  `)
 
   if (confirmacao) {
     vaga.candidatos.push(candidato)
-    alert('Inscrição realizada')
+    alert(`Inscrição realizada`)
   }
 }
 
@@ -89,35 +81,31 @@ function excluirVaga() {
   const indice = prompt('Informe o índice da vaga que deseja excluir:')
   const vaga = vagas[indice]
 
-  const confirmacao = confirm(
-    'Tem certeza que deseja excluir a vaga ' +
-      indice +
-      '?\n' +
-      'Nome: ' +
-      vaga.nome +
-      '\nDescrição: ' +
-      vaga.descricao +
-      '\nData limite: ' +
-      vaga.dataLimite
-  )
+  const confirmacao = confirm(`
+    Tem certeza que deseja excluir a vaga ${indice}?
+    Nome: ${vaga.nome}
+    Descrição: ${vaga.descricao}
+    Data limite: ${vaga.dataLimite}
+  `)
 
   if (confirmacao) {
     vagas.splice(indice, 1)
-    alert('Vaga excluída.')
+    alert(`Vaga excluída.`)
   }
 }
 
 function exibirMenu() {
-  const opcao = prompt(
-    'Cadastro de Vagas de Emprego' +
-      '\n\nEscolha uma das opções' +
-      '\n1. Listar vagas disponíveis' +
-      '\n2. Criar uma nova vaga' +
-      '\n3. Visualizar uma vaga' +
-      '\n4. Inscrever um(a) candidato(a)' +
-      '\n5. Excluir uma vaga' +
-      '\n6. Sair'
-  )
+  const opcao = prompt(`
+    Cadastro de Vagas de Emprego
+    Escolha uma das opções
+
+    1. Listar vagas disponíveis
+    2. Criar uma nova vaga
+    3. Visualizar uma vaga
+    4. Inscrever um(a) candidato(a)
+    5. Excluir uma vaga
+    6. Sair
+  `)
 
   return opcao
 }
@@ -143,11 +131,12 @@ function executar() {
         break
       case '5':
         excluirVaga()
-      case '6':
-        alert('Saindo...')
         break
+      case '6':
+        alert(`Saindo...`)
+        break1
       default:
-        alert('Opção inválida.')
+        alert(`Opção inválida.`)
     }
   } while (opcao !== '6')
 }
